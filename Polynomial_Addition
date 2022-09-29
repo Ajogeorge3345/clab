@@ -1,0 +1,91 @@
+#include<stdio.h>
+struct Polynomial{
+ int coeff,exp;
+ }P1[10],P2[10],R[10];
+//to read the polynomial
+int read(struct Polynomial poly[])
+{
+int i,n;
+printf("\nNumber of terms:\n");
+scanf("%d",&n);
+printf("Enter the coefficent and exponent in DESCENDING order\n");
+for(i=0;i<n;i++)
+{
+ printf("Coefficent= \n");
+ scanf("%d",&poly[i].coeff);
+ printf("Exponent=\n");
+ scanf("%d",&poly[i].exp);
+}
+return n;
+}
+//to display the polynomial
+void display(int n,struct Polynomial poly[])
+{
+int i;
+for(i=0;i<n;i++)
+{
+printf("%dX^%d",poly[i].coeff,poly[i].exp);
+if(i!=n-1)
+ printf("+");
+}
+printf("\n");
+}
+int sum(int P1count,int P2count)
+{
+int i=0,j=0,k=0;
+while(i<P1count&&j<P2count)
+{
+ if(P1[i].exp==P2[j].exp)
+ {
+   R[k].coeff=P1[i].coeff+P2[j].coeff;
+   R[k].exp=P1[i].exp;
+   i++;
+   j++;
+   k++;
+ }
+ else if(P1[i].exp>P2[j].exp)
+ {
+   R[k].coeff=P1[i].coeff;
+   R[k].exp=P1[i].exp;
+   i++;
+   k++;
+ }
+ else
+ {
+   R[k].coeff=P2[j].coeff;
+   R[k].exp=P2[j].exp;
+   j++;
+   k++;
+ }
+}
+while(i<P1count)
+{
+   R[k].coeff=P1[i].coeff;
+   R[k].exp=P1[i].exp;
+   i++;
+   k++;
+}
+while(j<P2count)
+{
+   R[k].coeff=P2[j].coeff;
+   R[k].exp=P2[j].exp;
+   j++;
+   k++;
+}
+return k;
+}
+int main()
+{
+int P1count,P2count,Rcount;
+printf("\nEnter First Expression:\n");
+P1count=read(P1);
+printf("Enter Second Expression:\n");
+P2count=read(P2);
+printf("First Expression=\n");
+display(P1count,P1);
+printf("Second Expression=\n");
+display(P2count,P2);
+Rcount=sum(P1count,P2count);
+printf("Resultant Expression=\n");
+display(Rcount,R);
+}
